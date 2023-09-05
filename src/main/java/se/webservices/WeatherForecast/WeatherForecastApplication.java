@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import se.webservices.WeatherForecast.models.ForeCast;
+import se.webservices.WeatherForecast.services.smhi.ForeCastService;
 
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.UUID;
 public class WeatherForecastApplication implements CommandLineRunner {
 
 	@Autowired
-	private ForecastService forecastService;
+	private ForeCastService forecastService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherForecastApplication.class, args);
@@ -70,7 +71,7 @@ public class WeatherForecastApplication implements CommandLineRunner {
 		listPredictions();
 		System.out.printf("Ange vilken du vill uppdatera:");
 		int num = scan.nextInt() ;
-		var forecast = forecastService.getByIndex(num-1);
+		var forecast = ForeCastService.getByIndex(num-1);
 		System.out.printf("%d %d CURRENT: %f %n",
 				forecast.getPredictionDatum(),
 				forecast.getPredictionHour(),

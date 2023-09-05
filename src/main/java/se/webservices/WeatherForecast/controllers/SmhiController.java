@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import se.webservices.WeatherForecast.dto.ForecastListDTO;
 import se.webservices.WeatherForecast.dto.NewForecastDTO;
 import se.webservices.WeatherForecast.models.ForeCast;
+import se.webservices.WeatherForecast.services.smhi.ForeCastService;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 @RestController
 public class SmhiController {
     @Autowired
-    private ForecastService forecastService;
+    private ForeCastService foreCastService;
     @GetMapping("/api/forecasts")
     public ResponseEntity<List<ForecastListDTO>> getAll(){
 
@@ -49,7 +50,7 @@ public class SmhiController {
 //        }
 //        return ret;
 
-        return new ResponseEntity<List<ForecastListDTO>>(forecastService.getForecasts().stream().map(forecast->{
+        return new ResponseEntity<List<ForecastListDTO>>(foreCastService.getForecasts().stream().map(forecast->{
             var forecastListDTO = new ForecastListDTO();
             forecastListDTO.Id = forecast.getId();
             return forecastListDTO;

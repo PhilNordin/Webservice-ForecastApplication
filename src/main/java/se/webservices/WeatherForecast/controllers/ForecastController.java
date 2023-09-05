@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import se.webservices.WeatherForecast.dto.ForecastListDTO;
 import se.webservices.WeatherForecast.dto.NewForecastDTO;
 import se.webservices.WeatherForecast.models.ForeCast;
+import se.webservices.WeatherForecast.services.smhi.ForeCastService;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 @RestController
 public class ForecastController {
     @Autowired
-    private ForecastService forecastService;
+    private ForeCastService forecastService;
     @GetMapping("/api/forecasts")
     public ResponseEntity<List<ForecastListDTO>> getAll(){
 
@@ -65,7 +66,7 @@ public class ForecastController {
 
     @GetMapping("/api/category/mesan1g/version/2/geotype/point/lon/16/lat/58/data.json")
     public ResponseEntity<ForeCast> get(@PathVariable UUID id){
-        Optional<ForeCast> forecast = forecastService.get(id);
+        Optional<ForeCast> forecast = forecastService.getForecast(id);
         if(forecast.isPresent()) return ResponseEntity.ok(forecast.get());
         return  ResponseEntity.notFound().build();
     }
