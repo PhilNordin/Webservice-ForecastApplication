@@ -1,21 +1,17 @@
-package se.systementor.dag1.services;
+package se.webservices.WeatherForecast.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.systementor.dag1.URLS.Urls;
-import se.systementor.dag1.models.Forecast;
-import se.systementor.dag1.repositories.ForecastRepository;
-import se.systementor.dag1.services.smhi.data.Parameter;
-import se.systementor.dag1.services.smhi.data.TimeSeries;
+import se.webservices.WeatherForecast.URLS.Urls;
+import se.webservices.WeatherForecast.models.Forecast;
+import se.webservices.WeatherForecast.repositories.ForecastRepository;
+import se.webservices.WeatherForecast.services.smhi.data.Parameter;
+import se.webservices.WeatherForecast.services.smhi.data.TimeSeries;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;

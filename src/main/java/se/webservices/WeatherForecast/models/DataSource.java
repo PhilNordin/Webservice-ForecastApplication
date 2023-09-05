@@ -1,4 +1,4 @@
-package se.systementor.dag1.models;
+package se.webservices.WeatherForecast.models;
 
 public enum DataSource {
     None,

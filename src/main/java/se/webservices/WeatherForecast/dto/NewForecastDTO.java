@@ -1,4 +1,4 @@
-package se.systementor.dag1.dto;
+package se.webservices.WeatherForecast.dto;
 
 
 

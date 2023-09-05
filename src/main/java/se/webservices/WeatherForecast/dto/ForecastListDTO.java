@@ -1,6 +1,4 @@
-package se.systementor.dag1.dto;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package se.webservices.WeatherForecast.dto;
 
 import java.util.UUID;
 

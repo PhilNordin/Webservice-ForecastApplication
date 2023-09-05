@@ -1,11 +1,11 @@
-package se.systementor.dag1;
+package se.webservices.WeatherForecast;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import se.systementor.dag1.models.Forecast;
-import se.systementor.dag1.services.ForecastService;
+import se.webservices.WeatherForecast.models.Forecast;
+import se.webservices.WeatherForecast.services.ForecastService;
 
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.UUID;
 public class Dag1Application implements CommandLineRunner {
 
 	@Autowired
-	private  ForecastService forecastService;
+	private ForecastService forecastService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Dag1Application.class, args);

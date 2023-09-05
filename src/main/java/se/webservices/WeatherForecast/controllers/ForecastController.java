@@ -1,13 +1,13 @@
-package se.systementor.dag1.controllers;
+package se.webservices.WeatherForecast.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.systementor.dag1.dto.ForecastListDTO;
-import se.systementor.dag1.dto.NewForecastDTO;
-import se.systementor.dag1.models.Forecast;
-import se.systementor.dag1.services.ForecastService;
+import se.webservices.WeatherForecast.dto.ForecastListDTO;
+import se.webservices.WeatherForecast.dto.NewForecastDTO;
+import se.webservices.WeatherForecast.models.Forecast;
+import se.webservices.WeatherForecast.services.ForecastService;
 
 import java.io.IOException;
 import java.util.List;

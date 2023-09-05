@@ -1,4 +1,4 @@
-package se.systementor.dag1.URLS;
+package se.webservices.WeatherForecast.URLS;
 
 public class Urls {
     public static String smhiAPI(){

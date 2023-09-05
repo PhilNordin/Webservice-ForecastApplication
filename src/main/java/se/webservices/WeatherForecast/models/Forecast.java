@@ -1,4 +1,4 @@
-package se.systementor.dag1.models;
+package se.webservices.WeatherForecast.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
