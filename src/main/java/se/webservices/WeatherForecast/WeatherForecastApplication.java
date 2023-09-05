@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import se.webservices.WeatherForecast.models.Forecast;
-import se.webservices.WeatherForecast.services.ForecastService;
+import se.webservices.WeatherForecast.models.ForeCast;
 
 
 import java.io.IOException;
@@ -17,13 +16,13 @@ import java.util.UUID;
  *
  */
 @SpringBootApplication
-public class Dag1Application implements CommandLineRunner {
+public class WeatherForecastApplication implements CommandLineRunner {
 
 	@Autowired
 	private ForecastService forecastService;
 
 	public static void main(String[] args) {
-		SpringApplication.run(Dag1Application.class, args);
+		SpringApplication.run(WeatherForecastApplication.class, args);
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class Dag1Application implements CommandLineRunner {
 		System.out.print("Temperature:");
 		var temp =  scan.nextInt() ;
 
-		var forecast = new Forecast();
+		var forecast = new ForeCast();
 		forecast.setId(UUID.randomUUID());
 		//forecast.setDate(dag);
 		forecast.setPredictionDatum(LocalDate.now());

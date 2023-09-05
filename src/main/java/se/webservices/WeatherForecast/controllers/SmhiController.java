@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 // varför gör man det som en stream och inte bara en for loop?
 
 @RestController
-public class ForecastController {
+public class SmhiController {
     @Autowired
     private ForecastService forecastService;
     @GetMapping("/api/forecasts")
@@ -63,7 +63,7 @@ public class ForecastController {
 //        return  ResponseEntity.notFound().build();
 //    }
 
-    @GetMapping("/api/category/mesan1g/version/2/geotype/point/lon/16/lat/58/data.json")
+    @GetMapping("/api/forecasts/{id}")
     public ResponseEntity<ForeCast> get(@PathVariable UUID id){
         Optional<ForeCast> forecast = forecastService.get(id);
         if(forecast.isPresent()) return ResponseEntity.ok(forecast.get());

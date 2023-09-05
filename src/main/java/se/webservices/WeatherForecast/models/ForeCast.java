@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class Forecast {
+public class ForeCast {
 
     private String color;
 
@@ -27,12 +27,12 @@ public class Forecast {
     private boolean rainOrSnow;
     private DataSource dataSource;
 
-    public Forecast(UUID id) {
+    public ForeCast(UUID id) {
         this.id = id;
         this.created = LocalDateTime.now();
     }
 
-    public Forecast() {
+    public ForeCast() {
 
     }
 
