@@ -6,14 +6,14 @@ import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import se.webservices.WeatherForecast.models.ForeCast;
+import se.webservices.WeatherForecast.models.Forecast;
 
 @Repository
-public interface ForecastRepository extends CrudRepository<ForeCast, UUID>{
+public interface ForecastRepository extends CrudRepository<Forecast, UUID>{
 
 
     @Override
-    List<ForeCast> findAll();
+    List<Forecast> findAll();
 
     //List<ForeCast> findAllBy(String part);
 

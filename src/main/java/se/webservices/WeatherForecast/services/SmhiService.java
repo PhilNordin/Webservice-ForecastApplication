@@ -1,4 +1,4 @@
-package se.webservices.WeatherForecast.services.smhi;
+package se.webservices.WeatherForecast.services;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import se.webservices.WeatherForecast.services.smhi.data.Root;
+import se.webservices.WeatherForecast.services.data.Root;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class SmhiService {
     private static Root root;
     @Autowired
-    private ForeCastService forecastService;
+    private ForecastService forecastService;
 
     public SmhiService(){
         try {

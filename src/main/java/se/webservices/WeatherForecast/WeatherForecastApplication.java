@@ -1,35 +1,39 @@
 package se.webservices.WeatherForecast;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import se.webservices.WeatherForecast.models.ForeCast;
-import se.webservices.WeatherForecast.services.smhi.ForeCastService;
-
+import se.webservices.WeatherForecast.models.DataSource;
+import se.webservices.WeatherForecast.models.Forecast;
+import se.webservices.WeatherForecast.repositories.ForecastRepository;
+import se.webservices.WeatherForecast.services.ForecastService;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.UUID;
 
-/**
- *
- */
 @SpringBootApplication
-public class WeatherForecastApplication implements CommandLineRunner {
+class Dag1Application implements CommandLineRunner {
 
 	@Autowired
-	private ForeCastService forecastService;
+	private  ForecastService forecastService;
 
 	public static void main(String[] args) {
-		SpringApplication.run(WeatherForecastApplication.class, args);
+		SpringApplication.run(Dag1Application.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 
-		forecastService.getAllOnDate(LocalDate.now());
+		forecastService.getForecast(LocalDateTime.now());
 
 		var scan = new Scanner(System.in);
 		while(true){
@@ -43,7 +47,7 @@ public class WeatherForecastApplication implements CommandLineRunner {
 				listPredictions();
 			}
 			else if(sel == 3){
-				updatePrediction(scan);
+				//updatePrediction(scan);
 			}
 			else if(sel == 2){
 
@@ -57,31 +61,22 @@ public class WeatherForecastApplication implements CommandLineRunner {
 		}
 	}
 
-	private void updatePrediction(Scanner scan) throws IOException {
-//		var a = new Forecast();
-//		var b = a;
-//		a.setTemperature(12);
-//		float f  = b.getTemperature();
+//	private void updatePrediction(Scanner scan) throws IOException {
 //
-//		int y = 12;
-//		int e = y;
-//		e = 19;
-//		System.out.println(y);
-//
-		listPredictions();
-		System.out.printf("Ange vilken du vill uppdatera:");
-		int num = scan.nextInt() ;
-		var forecast = ForeCastService.getByIndex(num-1);
-		System.out.printf("%d %d CURRENT: %f %n",
-				forecast.getPredictionDatum(),
-				forecast.getPredictionHour(),
-				forecast.getPredictionTemperature()
-		);
-		System.out.printf("Ange ny temp:");
-		var temp = scan.nextInt() ;
-		forecast.setPredictionTemperature(temp);
-		forecastService.update(forecast);
-	}
+//		listPredictions();
+//		System.out.printf("Ange vilken du vill uppdatera:");
+//		int num = scan.nextInt() ;
+//		var forecast = forecastService.getByIndex(num-1);
+//		System.out.printf("%d %d CURRENT: %f %n",
+//				forecast.getPredictionDatum(),
+//				forecast.getPredictionHour(),
+//				forecast.getPredictionTemperature()
+//		);
+//		System.out.printf("Ange ny temp:");
+//		var temp = scan.nextInt() ;
+//		forecast.setPredictionTemperature(temp);
+//		forecastService.update(forecast);
+//	}
 
 	private void addPrediction(Scanner scan) throws IOException {
 		//Input på dag, hour, temp
@@ -94,7 +89,7 @@ public class WeatherForecastApplication implements CommandLineRunner {
 		System.out.print("Temperature:");
 		var temp =  scan.nextInt() ;
 
-		var forecast = new ForeCast();
+		var forecast = new Forecast();
 		forecast.setId(UUID.randomUUID());
 		//forecast.setDate(dag);
 		forecast.setPredictionDatum(LocalDate.now());
@@ -103,6 +98,9 @@ public class WeatherForecastApplication implements CommandLineRunner {
 
 		forecastService.add(forecast);
 	}
+
+	@Autowired
+	ForecastRepository forecastRepository;
 	private void listPredictions() {
 		int num = 1;
 //		for(var forecast : forecastService.getForecasts()){

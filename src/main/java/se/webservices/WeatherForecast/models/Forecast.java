@@ -1,40 +1,41 @@
 package se.webservices.WeatherForecast.models;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class ForeCast {
+public class Forecast {
 
     private String color;
 
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     private UUID id;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private LocalDate created;
+    private LocalDate updated;
     private float longitude;
     private float latitude;
-    private LocalDate predictionDatum;
+    private LocalDate predictionDate;
     private int predictionHour; //8
     private int predictionTemperature;
     private boolean rainOrSnow;
     private DataSource dataSource;
 
-    public ForeCast(UUID id) {
+    public Forecast(UUID id) {
         this.id = id;
-        this.created = LocalDateTime.now();
+        this.created = LocalDate.now();
     }
 
-    public ForeCast() {
+    public Forecast() {
 
     }
+
 
     public UUID getId() {
         return id;
@@ -44,11 +45,11 @@ public class ForeCast {
         this.id = id;
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
@@ -68,12 +69,12 @@ public class ForeCast {
         this.latitude = latitude;
     }
 
-    public LocalDate getPredictionDatum() {
-        return predictionDatum;
+    public LocalDate getPredictionDate() {
+        return predictionDate;
     }
 
     public void setPredictionDatum(LocalDate predictionDatum) {
-        this.predictionDatum = predictionDatum;
+        this.predictionDate = predictionDatum;
     }
 
     public int getPredictionHour() {
@@ -108,11 +109,11 @@ public class ForeCast {
         this.dataSource = dataSource;
     }
 
-    public LocalDateTime getUpdated() {
+    public LocalDate getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDateTime updated) {
+    public void setUpdated(LocalDate updated) {
         this.updated = updated;
     }
 

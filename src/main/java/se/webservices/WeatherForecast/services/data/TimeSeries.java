@@ -1,4 +1,4 @@
-package se.webservices.WeatherForecast.services.smhi.data;
+package se.webservices.WeatherForecast.services.data;
 
 import java.util.Date;
 import java.util.List;

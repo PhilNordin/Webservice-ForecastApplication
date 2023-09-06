@@ -1,6 +1,7 @@
 package se.webservices.WeatherForecast.dto;
 
 
+import java.time.LocalDate;
 
 public class NewForecastDTO {  // DATA TRANSFER OBJECT
     private int date; //20230821
@@ -8,8 +9,8 @@ public class NewForecastDTO {  // DATA TRANSFER OBJECT
 
 
     private float temperature;
-    public int getDate() {
-        return date;
+    public LocalDate getDate() {
+        return getDate();
     }
 
     public void setDate(int date) {
@@ -24,8 +25,8 @@ public class NewForecastDTO {  // DATA TRANSFER OBJECT
         this.hour = hour;
     }
 
-    public float getTemperature() {
-        return temperature;
+    public int getTemperature() {
+        return (int) temperature;
     }
 
     public void setTemperature(float temperature) {
