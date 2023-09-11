@@ -21,19 +21,24 @@ import java.util.Scanner;
 import java.util.UUID;
 
 @SpringBootApplication
-class Dag1Application implements CommandLineRunner {
+class WeatherForecastApplication implements CommandLineRunner {
 
 	@Autowired
 	private  ForecastService forecastService;
 
 	public static void main(String[] args) {
-		SpringApplication.run(Dag1Application.class, args);
+		SpringApplication.run(WeatherForecastApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 
-		forecastService.getForecast(LocalDateTime.now());
+		forecastService.getForecast(LocalDate.now());
+		var forecast = new Forecast();
+		forecast.setId(UUID.randomUUID());
+		forecast.setPredictionTemperature(12);
+		forecast.setPredictionDatum(LocalDate.now());
+		forecast.setDataSource(DataSource.Console);
 
 		var scan = new Scanner(System.in);
 		while(true){

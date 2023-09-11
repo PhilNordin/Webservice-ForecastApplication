@@ -10,7 +10,7 @@ import se.webservices.WeatherForecast.models.Forecast;
 import se.webservices.WeatherForecast.services.ForecastService;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,7 +22,7 @@ public class ForecastController {
     private ForecastService forecastService;
     @GetMapping("/api/forecasts")
     public ResponseEntity<List<ForecastListDTO>> getAll(){
-        return new ResponseEntity<List<ForecastListDTO>>(forecastService.getForecast(LocalDateTime.now()).stream().map(forecast->{
+        return new ResponseEntity<List<ForecastListDTO>>(forecastService.getForecast(LocalDate.now()).stream().map(forecast->{
             var forecastListDTO = new ForecastListDTO();
             forecastListDTO.Id = forecast.getId();
             forecastListDTO.Date = forecast.getPredictionDate();
@@ -51,7 +51,7 @@ public class ForecastController {
     @PutMapping("/api/forecasts/{id}")
     public ResponseEntity<Forecast> update(@PathVariable UUID id, @RequestBody NewForecastDTO newForecastDTO) throws IOException {
         // mappa från dto -> entitet
-        var forecast = new Forecast(id);
+        var forecast = new Forecast();
         forecast.setId(id);
         forecast.setPredictionDatum(newForecastDTO.getDate());
         forecast.setPredictionHour(newForecastDTO.getHour());

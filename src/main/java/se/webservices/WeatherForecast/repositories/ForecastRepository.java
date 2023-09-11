@@ -15,6 +15,8 @@ public interface ForecastRepository extends CrudRepository<Forecast, UUID>{
     @Override
     List<Forecast> findAll();
 
+    List<Forecast> findAll(String s);
+
     //List<ForeCast> findAllBy(String part);
 
 }

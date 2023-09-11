@@ -7,18 +7,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 public class Forecast {
 
-    private String color;
-
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private LocalDate created;
-    private LocalDate updated;
+    private LocalDateTime created;
+    private LocalDateTime updated;
     private float longitude;
     private float latitude;
     private LocalDate predictionDate;
@@ -29,7 +28,7 @@ public class Forecast {
 
     public Forecast(UUID id) {
         this.id = id;
-        this.created = LocalDate.now();
+        this.created = LocalDateTime.now();
     }
 
     public Forecast() {
@@ -45,11 +44,11 @@ public class Forecast {
         this.id = id;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
@@ -109,15 +108,12 @@ public class Forecast {
         this.dataSource = dataSource;
     }
 
-    public LocalDate getUpdated() {
+    public LocalDateTime getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDate updated) {
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
     }
 
-    public String getColor() {
-        return color;
-    }
 }
