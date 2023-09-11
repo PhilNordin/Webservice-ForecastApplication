@@ -22,7 +22,7 @@ public class ForecastService {
     private static List<Forecast> forecasts = new ArrayList<>();
 
     public List<Forecast> getForecast(LocalDate now) {
-        List<Forecast> forecasts = forecastRepository.findAll(Urls.smhiAPI());
+        List<Forecast> forecasts = forecastRepository.findAll();
 
         return forecastRepository.findAll();
     }

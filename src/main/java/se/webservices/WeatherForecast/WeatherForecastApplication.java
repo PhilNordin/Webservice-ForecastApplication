@@ -38,7 +38,7 @@ class WeatherForecastApplication implements CommandLineRunner {
 		forecast.setId(UUID.randomUUID());
 		forecast.setPredictionTemperature(12);
 		forecast.setPredictionDatum(LocalDate.now());
-		forecast.setDataSource(DataSource.Console);
+		forecast.setDataSource(DataSource.Smhi);
 
 		var scan = new Scanner(System.in);
 		while(true){
