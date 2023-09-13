@@ -1,17 +1,18 @@
 package se.webservices.WeatherForecast.dto;
 
-
 import java.time.LocalDate;
 
-public class NewForecastDTO {  // DATA TRANSFER OBJECT
-    private LocalDate date; //20230821
+public class AverageDTO {
+    private LocalDate date;
     private int hour;
-    private float temperature;
+    private float average;
 
+    //Constructors
+    public AverageDTO(){
+    }
 
-    //GET/SETTERS
     public LocalDate getDate() {
-        return getDate();
+        return date;
     }
 
     public void setDate(LocalDate date) {
@@ -26,13 +27,11 @@ public class NewForecastDTO {  // DATA TRANSFER OBJECT
         this.hour = hour;
     }
 
-    public int getTemperature() {
-        return (int) temperature;
+    public float getAverage() {
+        return average;
     }
 
-    public void setTemperature(float temperature) {
-        this.temperature = temperature;
+    public void setAverage(float average) {
+        this.average = average;
     }
-
 }
-

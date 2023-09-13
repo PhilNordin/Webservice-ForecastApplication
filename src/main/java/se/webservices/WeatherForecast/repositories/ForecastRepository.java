@@ -1,5 +1,6 @@
 package se.webservices.WeatherForecast.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,8 @@ public interface ForecastRepository extends CrudRepository<Forecast, UUID>{
 
     @Override
     List<Forecast> findAll();
+
+    List<Forecast> findAllByDate(LocalDate date);
 
 
 }

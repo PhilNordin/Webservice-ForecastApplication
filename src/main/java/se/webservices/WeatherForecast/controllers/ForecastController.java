@@ -22,12 +22,12 @@ public class ForecastController {
     private ForecastService forecastService;
     @GetMapping("/api/forecasts")
     public ResponseEntity<List<ForecastListDTO>> getAll(){
-        return new ResponseEntity<List<ForecastListDTO>>(forecastService.getForecast(LocalDate.now()).stream().map(forecast->{
+        return new ResponseEntity<List<ForecastListDTO>>(forecastService.getForecasts().stream().map(forecast->{
             var forecastListDTO = new ForecastListDTO();
             forecastListDTO.Id = forecast.getId();
-            forecastListDTO.Date = forecast.getPredictionDate();
-            forecastListDTO.Temperature = forecast.getPredictionTemperature();
-            forecastListDTO.Hour = forecast.getPredictionHour();
+            forecastListDTO.Date = forecast.getDate();
+            forecastListDTO.Temperature = forecast.getTemperature();
+            forecastListDTO.Hour = forecast.getHour();
             return forecastListDTO;
         }).collect(Collectors.toList()), HttpStatus.OK);
 
@@ -51,19 +51,19 @@ public class ForecastController {
     @PutMapping("/api/forecasts/{id}")
     public ResponseEntity<Forecast> update(@PathVariable UUID id, @RequestBody NewForecastDTO newForecastDTO) throws IOException {
         // mappa från dto -> entitet
-        var forecast = new Forecast();
+        var forecast = forecastService.get(id).get();
         forecast.setId(id);
-        forecast.setPredictionDatum(newForecastDTO.getDate());
-        forecast.setPredictionHour(newForecastDTO.getHour());
-        forecast.setPredictionTemperature(newForecastDTO.getTemperature());
+        forecast.setDate(newForecastDTO.getDate());
+        forecast.setHour(newForecastDTO.getHour());
+        forecast.setTemperature(newForecastDTO.getTemperature());
         forecastService.update(forecast);
         return ResponseEntity.ok(forecast);
     }
 
     @PostMapping("/api/forecasts")
     public ResponseEntity<Forecast> newForecast( @RequestBody Forecast forecast) throws IOException { // id
-        var newCreated = forecastService.add(forecast);
-        return ResponseEntity.ok(newCreated); // mer REST ful = created (204) samt url till produkten
+        forecastService.add(forecast);
+        return ResponseEntity.ok(forecast); // mer REST ful = created (204) samt url till produkten
     }
 
 

@@ -1,4 +1,4 @@
-package se.webservices.WeatherForecast.services.data;
+package se.webservices.WeatherForecast.models.data;
 
 import java.util.Date;
 import java.util.List;

@@ -16,25 +16,24 @@ public class Forecast {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private LocalDate created;
+    private LocalDate updated;
     private float longitude;
     private float latitude;
-    private LocalDate predictionDate;
-    private int predictionHour; //8
-    private int predictionTemperature;
+    private LocalDate date;
+    private int hour; //8
+    private float temperature;
     private boolean rainOrSnow;
     private DataSource dataSource;
 
     public Forecast(UUID id) {
         this.id = id;
-        this.created = LocalDateTime.now();
+        this.created = LocalDate.now();
     }
 
     public Forecast() {
 
     }
-
 
     public UUID getId() {
         return id;
@@ -44,12 +43,20 @@ public class Forecast {
         this.id = id;
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
+    }
+
+    public LocalDate getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDate updated) {
+        this.updated = updated;
     }
 
     public float getLongitude() {
@@ -68,28 +75,28 @@ public class Forecast {
         this.latitude = latitude;
     }
 
-    public LocalDate getPredictionDate() {
-        return predictionDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setPredictionDatum(LocalDate predictionDatum) {
-        this.predictionDate = predictionDatum;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public int getPredictionHour() {
-        return predictionHour;
+    public int getHour() {
+        return hour;
     }
 
-    public void setPredictionHour(int predictionHour) {
-        this.predictionHour = predictionHour;
+    public void setHour(int hour) {
+        this.hour = hour;
     }
 
-    public int getPredictionTemperature() {
-        return predictionTemperature;
+    public float getTemperature() {
+        return temperature;
     }
 
-    public void setPredictionTemperature(int predictionTemperature) {
-        this.predictionTemperature = predictionTemperature;
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
     }
 
     public boolean isRainOrSnow() {
@@ -107,13 +114,4 @@ public class Forecast {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
-    }
-
 }
