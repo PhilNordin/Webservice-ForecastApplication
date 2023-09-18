@@ -27,6 +27,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
+import static se.webservices.WeatherForecast.models.Colors.*;
+
 @SpringBootApplication
 class WeatherForecastApplication implements CommandLineRunner {
 
@@ -45,7 +47,7 @@ class WeatherForecastApplication implements CommandLineRunner {
 		var objectMapper = new ObjectMapper();
 		Root predictions = objectMapper.readValue(new URL(Urls.smhiAPI()),Root.class);
 
-		// Coordinater SMHI:
+		// Coordinates SMHI:
 		String smhilong = predictions.getGeometry().getCoordinates().get(0).get(0).toString();
 		String smhilati = predictions.getGeometry().getCoordinates().get(0).get(1).toString();
 
@@ -54,8 +56,8 @@ class WeatherForecastApplication implements CommandLineRunner {
 		Date today = new Date(); // skriver dagens datum och tid från att den körs
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(today);
-		calendar.add(Calendar.HOUR_OF_DAY,24); // 13:00 till 13:00 nästa dag
-		Date tomorrow = calendar.getTime();
+		calendar.add(Calendar.HOUR_OF_DAY,24); // 13:00 till 13:00 nästa dag (24 timmar framåt)
+		Date tomorrow = calendar.getTime();  //Morgondagens datum efter klockan passerat 00:00
 
 		System.out.println(today);
 		System.out.println(tomorrow);
@@ -65,7 +67,7 @@ class WeatherForecastApplication implements CommandLineRunner {
 		int nummer = 0;
 		for (TimeSeries timeSeries : predictions.getTimeSeries()) {
 			Date validTime = timeSeries.getValidTime(); // date validtime = time.getValidTime
-			System.out.printf("%d) Valid Time: %s%n", nummer++, validTime);
+			System.out.printf(WHITE_BOLD_BRIGHT +"%d) Valid Time: %s%n", nummer++, validTime);
 		}
 
 //-------------------- Få ut ApprovedTime, ReferenceTime, getGeometry( Location: coordinater )--------------------------
@@ -136,7 +138,7 @@ class WeatherForecastApplication implements CommandLineRunner {
 								System.out.println("Weather temp: " + parameterValue + " C\n");
 								;
 							} else if (parameter.getName().equals("pcat")) {
-								System.out.println("\t\tNederbörd (precipitation) info:");
+								System.out.println("\t\tPrecipitation(Nederbörd) info:");
 								System.out.printf("\n Name: %s %n Level type: %s %n Level: %d %n Unit: %s %n Value: %s\n____________________\n",
 										parameter.getName(),
 										parameter.getLevelType(),
@@ -144,7 +146,6 @@ class WeatherForecastApplication implements CommandLineRunner {
 										parameter.getUnit(),
 										parameter.getValues());
 
-								//Forcast forcast = new Forcast();
 								if (parameterValue == 0.0) {
 									System.out.println("pcat value: " + parameterValue);
 									System.out.println("No precipitation");
@@ -162,7 +163,6 @@ class WeatherForecastApplication implements CommandLineRunner {
 									System.out.println("Rain");
 								}
 
-								//forecastRepository.save(forcast);
 								System.out.println("\n------------------------------------------------\n");
 							}
 					}
@@ -185,68 +185,85 @@ class WeatherForecastApplication implements CommandLineRunner {
 
 		var scan = new Scanner(System.in);
 		while(true){
-			System.out.println("************************");
-			System.out.println("1. List all predictions");
-			System.out.println("2. Create predictions");
-			System.out.println("3. Update predictions");
-			System.out.println("4. Delete predictions");
-			System.out.println("5. Save smhiData");
-			System.out.println("6. Create dummy");
-			System.out.println("7. Delete dummy");
-			System.out.println("8. Average Data");
-			System.out.println("9. Exit application");
-			System.out.println("************************");
-			System.out.print("\nAction:");
-			int sel = scan.nextInt();
-			if(sel == 1){
-				listPredictions();
-			}
-			else if(sel == 3){
-				//updatePrediction(scan);
-			}
-			else if(sel == 2){
-
-				addPrediction(scan);
-			}
-			else if(sel == 3){
-
-				//UpdatePrediction
-			}
-			else if (sel == 4) {
-				//deletePrediction(scan);
-			} else if (sel == 5) {
-				smhiAPi();
-			} else if (sel == 6) {
-				dummyAdd(scan);
-			} else if (sel == 7) {
-				deleteAllDummys();
-			} else if (sel == 8) {
-				calculateAverage();
-
-			}else if(sel == 9){
-				break;
+			System.out.println(WHITE_BOLD_BRIGHT+"\n************************");
+			System.out.println(WHITE_BOLD_BRIGHT+"1. List all predictions");
+			System.out.println(WHITE_BOLD_BRIGHT+"2. Create predictions");
+			System.out.println(WHITE_BOLD_BRIGHT+"3. Update predictions");
+			System.out.println(WHITE_BOLD_BRIGHT+"4. Delete predictions");
+			System.out.println(WHITE_BOLD_BRIGHT+"5. Save SMHI-Data");
+			System.out.println(WHITE_BOLD_BRIGHT+"6. Create dummy");
+			System.out.println(WHITE_BOLD_BRIGHT+"7. Delete dummy");
+			System.out.println(WHITE_BOLD_BRIGHT+"8. Average Data");
+			System.out.println(WHITE_BOLD_BRIGHT+ "9. Exit application");
+			System.out.println(WHITE_BOLD_BRIGHT+"************************");
+			System.out.print(WHITE_BOLD_BRIGHT+"\nAction:");
+			int sel = getUserInputInt();
+			switch (sel){
+				case 1:
+					listPredictions();
+					break;
+				case 2:
+					addPrediction(scan);
+					break;
+				case 3:
+					updatePrediction(scan);
+					break;
+				case 4:
+					//deletePrediction(scan);
+					break;
+				case 5:
+					smhiAPi();
+					break;
+				case 6:
+					dummyAdd(scan);
+					break;
+				case 7:
+					deleteAllDummys();
+					break;
+				case 8:
+					calculateAverage();
+				case 9:
+					break;
 			}
 		}
 	}
 
+	public static int getUserInputInt(){
+		Scanner sc = new Scanner(System.in);
+		String userInput;
+		int userInputInt = 0;
+		boolean runInput = true;
+
+		do {
+			try{
+				userInput = sc.nextLine();
+				userInputInt = Integer.parseInt(userInput);
+				runInput = false;
+			}catch (Exception e){
+				System.out.println(RED_BOLD_BRIGHT+"Wrong input format. Try again!"+RESET);
+			}
+		}while(runInput);
+		return userInputInt;
+	}
 
 
-//	private void updatePrediction(Scanner scan) throws IOException {
-//
-//		listPredictions();
-//		System.out.printf("Ange vilken du vill uppdatera:");
-//		int num = scan.nextInt() ;
-//		var forecast = forecastService.getByIndex(num-1);
-//		System.out.printf("%d %d CURRENT: %f %n",
-//				forecast.getPredictionDatum(),
-//				forecast.getPredictionHour(),
-//				forecast.getPredictionTemperature()
-//		);
-//		System.out.printf("Ange ny temp:");
-//		var temp = scan.nextInt() ;
-//		forecast.setPredictionTemperature(temp);
-//		forecastService.update(forecast);
-//	}
+
+	private void updatePrediction(Scanner scan) throws IOException {
+
+		listPredictions();
+		System.out.printf(CYAN_BOLD_BRIGHT+"Ange vilken du vill uppdatera:"+RESET);
+		int num = scan.nextInt() ;
+		var forecast = forecastService.getByIndex(num-1);
+		System.out.printf("%d %d CURRENT: %f %n",
+				forecast.getDate(),
+				forecast.getHour(),
+				forecast.getTemperature()
+		);
+		System.out.printf("Ange ny temp:");
+		var temp = scan.nextInt() ;
+		forecast.setTemperature(temp);
+		forecastService.update(forecast);
+	}
 
 	public static String longitude = "18.02151508449004";
 	public static String latitude = "59.30996552541549";
@@ -254,8 +271,8 @@ class WeatherForecastApplication implements CommandLineRunner {
 	private void addPrediction(Scanner scan) throws IOException {
 		//Input på dag, hour, temp
 		//Anropa servicen - Save
-		System.out.println("*** CREATE PREDICTION ***");
-		System.out.printf("Ange vilken dag:");
+		System.out.println(CYAN_BOLD_BRIGHT+"*** CREATE PREDICTION ***"+ RESET);
+		System.out.printf(WHITE_BOLD_BRIGHT+"What date is it? ** YYYYMMDD **");
 		int dag = scan.nextInt() ;
 		System.out.print("Hour:");
 		int hour =  scan.nextInt() ;
@@ -272,20 +289,21 @@ class WeatherForecastApplication implements CommandLineRunner {
 		forecastService.add(forecast);
 	}
 	private void dummyAdd(Scanner scan) throws ParseException, IOException {
-		System.out.println(" CREATE PREDICATION ");
+		System.out.println(CYAN_BOLD_BRIGHT+" CREATE PREDICATION " + RESET);
 		//------------- Ange datum --------------
-		System.out.println("Ange datum som (yyyy-MM-dd): ");
+		System.out.println("Add date in the following format (yyyy-MM-dd): ");
 		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
 		String date = scan.next();
 		DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate formattedDate = LocalDate.parse(date, sdf);
 
-		var prutt = LocalDate.from(formattedDate.atStartOfDay());
+		var dat = LocalDate.from(formattedDate.atStartOfDay());
+
 		for (int i = 0; i < 24; i++) {
 
 			var forecast = new Forecast();
 			forecast.setId(UUID.randomUUID());
-			forecast.setDate(prutt); //forecast.setDate(dag);
+			forecast.setDate(dat); //forecast.setDate(dag);
 			forecast.setHour(i);
 			forecast.setTemperature(i);
 			forecast.setLongitude(Float.parseFloat(longitude));
@@ -320,11 +338,11 @@ class WeatherForecastApplication implements CommandLineRunner {
 
 		List<Forecast> forecasts = forecastService.getForecasts();
 
-		// Sortera listan med förutsägelser baserat på datum och tid
+		// Sortera listan med predictions baserat på datum och tid
 		Collections.sort(forecasts, new Comparator<Forecast>() {
 			@Override
 			public int compare(Forecast f1, Forecast f2) {
-				// Jämför förutsägelserna baserat på datum och tid
+				// Jämför predictions baserat på datum och tid
 				int dateComparison = f1.getDate().compareTo(f2.getDate());
 				if (dateComparison == 0) {
 					// Om datumet är samma, jämför tid
@@ -334,13 +352,13 @@ class WeatherForecastApplication implements CommandLineRunner {
 			}
 		});
 
-		System.out.println("\t Listar Predictions \n ");
+		System.out.println(CYAN_BOLD_BRIGHT+"\t Listing Predictions " + RESET);
 
 		for (var forecast : forecasts) {
 
 			//String adminTime = sdf.format(forecast.getDate());
 //			System.out.printf("\t%d) %n\tId: %s %n\tDag: %s Tid: %d:00 %n\tTemp: %.1f %n\tData Source: %s %n %n",
-			System.out.printf("\t%d) %n\tId: %s %n\tcreated: %s %n\tlatitude: %s %n\tlongitude: %s %n\tDag: %s Tid: %d:00 %n\tTemp: %.1f %n\tData Source: %s %n %n",
+			System.out.printf(YELLOW_BOLD_BRIGHT + "\t%d) %n\tId: %s %n\tcreated: %s %n\tlatitude: %s %n\tlongitude: %s %n\tDag: %s Tid: %d:00 %n\tTemp: %.1f %n\tData Source: %s %n %n",
 					num++,
 					forecast.getId(),
 					forecast.getCreated(),

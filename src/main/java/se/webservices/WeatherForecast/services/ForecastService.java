@@ -66,16 +66,16 @@ public class ForecastService {
         // Loopa genom timmarna för de närmaste 24 timmarna
         for (int timme = currentHour; timme < currentHour + 24; timme++) {
             var averageDto = new AverageDTO();
-            averageDto.setHour(timme % 24); // Hantera överskridande av midnatt
+            averageDto.setHour(timme % 24); // Hantera passering av midnatt (00:00)
             averageDto.setDate(dag);
             float antal = 0;
             float sum = 0;
 
             // Loopa genom alla prognoser för dagen och beräkna genomsnittet för den aktuella timmen
-            for (Forecast forcast : allForecastsForDay) {
-                if (forcast.getHour() == timme % 24) {
+            for (Forecast forecast : allForecastsForDay) {
+                if (forecast.getHour() == timme % 24) {
                     antal++;
-                    sum += forcast.getTemperature();
+                    sum += forecast.getTemperature();
                 }
             }
 
