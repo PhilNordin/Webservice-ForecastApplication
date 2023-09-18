@@ -112,8 +112,8 @@ class WeatherForecastApplication implements CommandLineRunner {
 								paramUnit = parameter.getUnit();
 
 								// Extract more parameter details as needed
-								System.out.println("------------------------------------------------\n");
-								System.out.println("\t\tTemperature info:");
+								System.out.println(WHITE_BOLD_BRIGHT +"------------------------------------------------\n"+RESET);
+								System.out.println(YELLOW_BOLD_BRIGHT + "\t\tTemperature info:");
 								System.out.printf("\n Name: %s %n Level type: %s %n Level: %d %n Unit: %s %n Value: %s\n",
 										paramName,
 										paramLvlType,
@@ -160,10 +160,10 @@ class WeatherForecastApplication implements CommandLineRunner {
 
 								} else if (parameterValue == 3.0) {
 									System.out.println("pcat value: " + parameterValue);
-									System.out.println("Rain");
+									System.out.println("Rain" + RESET);
 								}
 
-								System.out.println("\n------------------------------------------------\n");
+								System.out.println(WHITE_BOLD_BRIGHT +"\n------------------------------------------------\n"+RESET);
 							}
 					}
 				}
@@ -186,17 +186,17 @@ class WeatherForecastApplication implements CommandLineRunner {
 		var scan = new Scanner(System.in);
 		while(true){
 			System.out.println(WHITE_BOLD_BRIGHT+"\n************************");
-			System.out.println(WHITE_BOLD_BRIGHT+"1. List all predictions");
-			System.out.println(WHITE_BOLD_BRIGHT+"2. Create predictions");
-			System.out.println(WHITE_BOLD_BRIGHT+"3. Update predictions");
-			System.out.println(WHITE_BOLD_BRIGHT+"4. Delete predictions");
-			System.out.println(WHITE_BOLD_BRIGHT+"5. Save SMHI-Data");
-			System.out.println(WHITE_BOLD_BRIGHT+"6. Create dummy");
-			System.out.println(WHITE_BOLD_BRIGHT+"7. Delete dummy");
-			System.out.println(WHITE_BOLD_BRIGHT+"8. Average Data");
-			System.out.println(WHITE_BOLD_BRIGHT+ "9. Exit application");
-			System.out.println(WHITE_BOLD_BRIGHT+"************************");
-			System.out.print(WHITE_BOLD_BRIGHT+"\nAction:");
+			System.out.println("1. List all predictions");
+			System.out.println("2. Create predictions");
+			System.out.println("3. Update predictions");
+			System.out.println("4. Delete predictions");
+			System.out.println("5. Save SMHI-Data");
+			System.out.println("6. Create dummy");
+			System.out.println("7. Delete dummy");
+			System.out.println("8. Average Data");
+			System.out.println( "9. Exit application");
+			System.out.println("************************");
+			System.out.print("\nAction:\n"+ RESET);
 			int sel = getUserInputInt();
 			switch (sel){
 				case 1:
@@ -326,7 +326,8 @@ class WeatherForecastApplication implements CommandLineRunner {
 		List<AverageDTO> dtos = forecastService.calculateAverage(dag);
 
 		for (int hour = 0; hour < dtos.size(); hour++){
-			System.out.println(dtos.get(hour).getDate() + "- KL: " + hour + ":00. Average temp: " + dtos.get(hour).getAverage() + "C\n");
+			System.out.println(YELLOW_BOLD_BRIGHT + dtos.get(hour).getDate() + "- KL: " + hour
+					+ ":00. Average temp: " + dtos.get(hour).getAverage() + "C\n"+RESET);
 		}
 
 	}
