@@ -40,7 +40,7 @@ public class ForecastService {
         forecastRepository.save(forecastFromUser);
     }
 
-    public void delete(UUID id) {
+    public void deleteById(UUID id) {
         forecastRepository.deleteById(id);
         System.out.println("\n*----- DELETED -----*");
     }
@@ -63,17 +63,27 @@ public class ForecastService {
         LocalTime currentTime = LocalTime.now();
         int currentHour = currentTime.getHour();
 
+
+//        Date currentTime = new Date();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(currentTime);
+//        calendar.add(Calendar.HOUR_OF_DAY, 24);
+//        Date tomorrow = calendar.getTime();
+//
+//        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+
+
         // Loopa genom timmarna för de närmaste 24 timmarna
-        for (int timme = currentHour; timme < currentHour + 24; timme++) {
+        for (int hour = currentHour; hour < currentHour + 24; hour++) {
             var averageDto = new AverageDTO();
-            averageDto.setHour(timme % 24); // Hantera passering av midnatt (00:00)
+            averageDto.setHour(hour % 24); // Hantera passering av midnatt (00:00)
             averageDto.setDate(dag);
             float antal = 0;
             float sum = 0;
 
             // Loopa genom alla prognoser för dagen och beräkna genomsnittet för den aktuella timmen
             for (Forecast forecast : allForecastsForDay) {
-                if (forecast.getHour() == timme % 24) {
+                if (forecast.getHour() == hour % 24) {
                     antal++;
                     sum += forecast.getTemperature();
                 }

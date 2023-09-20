@@ -67,7 +67,7 @@ public class ForecastController {
         return ResponseEntity.ok(forecast); // mer REST ful = created (204) samt url till produkten
     }
 
-    @GetMapping("api/average/{date}")
+    @GetMapping("/api/average/{date}")
     public ResponseEntity<List<AverageDTO>> getAverageTemperature(@PathVariable String date) {
         try {
 
@@ -75,7 +75,7 @@ public class ForecastController {
             LocalDate startDate = LocalDate.parse(date);
 
             //Calculate the end date by adding one day to the start date
-            //LocalDate endDate = startDate.plusDays(1);
+            LocalDate endDate = startDate.plusDays(1);
 
             //Calculate average temperature by data source
             List<AverageDTO> results = forecastService.calculateAverage(startDate);
